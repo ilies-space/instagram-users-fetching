@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 
 export default function App() {
@@ -13,37 +14,51 @@ export default function App() {
   const [isLoading, setIsloadin] = useState(false);
   const [users, setUsers] = useState([]);
 
+  function getUSerList() {
+    setIsloadin(true);
+    setUsers([]);
+    fetch('https://www.instagram.com/web/search/topsearch/?query=' + query)
+      .then((response) => response.json())
+      .catch((Error) => {
+        console.log(Error);
+        setIsloadin(false);
+      })
+      .then((data) => {
+        console.log(data.users);
+        setUsers(data.users);
+        setIsloadin(false);
+      });
+  }
+
   return (
     <View style={{flex: 1, alignItems: 'center', backgroundColor: '#acdbdf'}}>
-      <TextInput
+      <View
         style={{
-          borderWidth: 0.5,
-          paddingHorizontal: 50,
-          marginVertical: 5,
-          borderRadius: 20,
-          borderColor: 'gray',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          height: 35,
-        }}
-        placeholder={'Search by user name ... '}
-        onChangeText={(value) => {
-          setIsloadin(true);
-
-          setUsers([]);
-          fetch(
-            'https://www.instagram.com/web/search/topsearch/?query=' + value,
-          )
-            .then((response) => response.json())
-            .catch((Error) => alert(Error))
-            .then((data) => {
-              console.log(data.users);
-              setUsers(data.users);
-              setIsloadin(false);
-            });
-        }}
-      />
+          flexDirection: 'row',
+        }}>
+        <Button title={'search'} onPress={getUSerList} />
+        <TextInput
+          onSubmitEditing={() => {
+            getUSerList();
+          }}
+          style={{
+            borderWidth: 0.5,
+            paddingHorizontal: 50,
+            marginVertical: 5,
+            borderRadius: 20,
+            borderColor: 'gray',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            height: 35,
+          }}
+          value={query}
+          placeholder={'Search by user name ... '}
+          onChangeText={(value) => {
+            setQuery(value);
+          }}
+        />
+      </View>
       {isLoading ? (
         <View style={{}}>
           <ActivityIndicator />
