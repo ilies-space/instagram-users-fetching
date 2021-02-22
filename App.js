@@ -13,8 +13,10 @@ export default function App() {
   const [query, setQuery] = useState('');
   const [isLoading, setIsloadin] = useState(false);
   const [users, setUsers] = useState([]);
+  const [error, seterror] = useState(false);
 
   function getUSerList() {
+    seterror(false);
     setIsloadin(true);
     setUsers([]);
     fetch('https://www.instagram.com/web/search/topsearch/?query=' + query)
@@ -22,6 +24,7 @@ export default function App() {
       .catch((Error) => {
         console.log(Error);
         setIsloadin(false);
+        seterror(true);
       })
       .then((data) => {
         console.log(data.users);
@@ -63,6 +66,16 @@ export default function App() {
         <View style={{}}>
           <ActivityIndicator />
           <Text>Searching ... </Text>
+        </View>
+      ) : (
+        <View />
+      )}
+
+      {error ? (
+        <View>
+          <Text>
+            You've reached request rate limit for today , try again later ... 😒
+          </Text>
         </View>
       ) : (
         <View />
