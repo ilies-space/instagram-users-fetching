@@ -41,25 +41,28 @@ export default function App() {
   }
 
   return (
-    <View style={{flex: 1, alignItems: 'center', backgroundColor: '#acdbdf'}}>
+    <View style={{flex: 1, alignItems: 'center', backgroundColor: '#fff'}}>
       <View
         style={{
           flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
         <TextInput
           onSubmitEditing={() => {
             getUSerList();
           }}
           style={{
-            borderWidth: 0.5,
             paddingHorizontal: 50,
             marginVertical: 5,
-            borderRadius: 20,
+            borderRadius: 10,
             borderColor: 'gray',
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
             height: 35,
+            color: 'black',
+            backgroundColor: '#bdc3c7',
           }}
           value={query}
           placeholder={'Search by user name ... '}
@@ -67,6 +70,21 @@ export default function App() {
             setQuery(value);
           }}
         />
+        {query.length > 0 ? (
+          // true?
+          <TouchableOpacity
+            onPress={() => {
+              setQuery('');
+            }}>
+            <Text style={{color: '#2980b9'}}>Cancel</Text>
+          </TouchableOpacity>
+        ) : (
+          <View
+            style={{
+              width: 41,
+            }}
+          />
+        )}
       </View>
       {isLoading ? (
         <View style={{}}>
