@@ -111,6 +111,31 @@ export default function App() {
                         uri: userInfo.profile_pic_url,
                       }}
                     />
+                    {/*OFFICIAL BADJ*/}
+                    {userInfo.is_verified ? (
+                      <View
+                        style={{
+                          height: 30,
+                          width: 30,
+                          position: 'absolute',
+                          borderRadius: 20,
+                          top: -5,
+                          left: -10,
+                        }}>
+                        <Image
+                          style={{
+                            height: 30,
+                            width: 30,
+                          }}
+                          source={{
+                            uri:
+                              'https://www.rural-ftp.com//images/images/t2stdzRxJW6Rm4vX.png',
+                          }}
+                        />
+                      </View>
+                    ) : (
+                      <View />
+                    )}
                   </View>
                   <View>
                     <Text style={{fontWeight: 'bold'}}>
